@@ -1,5 +1,4 @@
 prediction_1="";
-prediction_2="";
 
 Webcam.set({
     width:350,
@@ -21,7 +20,7 @@ function takeSnapshot()
 
 console.log("ml5 version is " ,ml5.version);
 
-classifier=ml5.imageClassifier('https://teachablemachine.withgoogle.com/models/sbzByoFWX/model.json',modelLoaded);
+classifier=ml5.imageClassifier('https://teachablemachine.withgoogle.com/models/nWiMKTHCi/model.json',modelLoaded);
 
 function modelLoaded()
 {
@@ -31,9 +30,8 @@ function modelLoaded()
 function speak()
 {
     var Synth=window.speechSynthesis;
-    speak_data_1="The first prediction is "+prediction_1;
-    speak_data_2="And the second prediction is "+prediction_2;
-    var UtterThis= new SpeechSynthesisUtterance(speak_data_1+speak_data_2);
+    speak_data_1="The prediction is"+prediction_1;
+    var UtterThis= new SpeechSynthesisUtterance(speak_data_1);
     Synth.speak(UtterThis);
 }
 
@@ -52,35 +50,19 @@ if(error)
 else
 {
     console.log(results);
-    document.getElementById("result_emotion_name").innerHTML=results[0].label;
-    document.getElementById("result_emotion_name2").innerHTML=results[1].label;
+    document.getElementById("result_gesture_name").innerHTML=results[0].label;
     prediction_1=results[0].label;
-    prediction_2=results[1].label;
     speak();
-    if(results[0].label=="Surprised")
+    if(results[0].label=="Thumbs Up")
     {
-        document.getElementById("update_emoji").innerHTML="&#128562;";
+        document.getElementById("update_gesture").innerHTML="&#128077;";
     }
-    if(results[0].label=="Sad")
+    if(results[0].label=="Thumbs Down")
     {
-        document.getElementById("update_emoji").innerHTML="&#128532;";
+        document.getElementById("update_gesture").innerHTML="&#128078;";
     }
-    if(results[0].label=="Happy")
+    if(results[0].label=="Amazing")
     {
-        document.getElementById("update_emoji").innerHTML="&#128512;";
+        document.getElementById("update_gesture").innerHTML="&#128076;";
     }
-
-    if(results[1].label=="Surprised")
-    {
-        document.getElementById("update_emoji2").innerHTML="&#128562;";
-    }
-    if(results[1].label=="Sad")
-    {
-        document.getElementById("update_emoji2").innerHTML="&#128532;";
-    }
-    if(results[1].label=="Happy")
-    {
-        document.getElementById("update_emoji2").innerHTML="&#128512;";
-    }
-}
-}
+}}
